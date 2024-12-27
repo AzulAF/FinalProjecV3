@@ -15,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let _ = InternetMonitor.shared
+        DataManager.shared.llenaBDMarcadores()
+        //DataManager.shared.listadodeArtistas()
+        
+        
         return true
     }
 
