@@ -101,6 +101,20 @@ class ArtistTableViewController: UITableViewController {
         //cell.Artistimg.text = artistas[indexPath.row].imagen
         cell.ArtistMesa.text = artistasv2[indexPath.row].mesa
         cell.ArtistPiso.text = artistasv2[indexPath.row].piso
+        
+        if let imageUrl = URL(string: artistasv2[indexPath.row].imagen) {
+            // Load image (you can use a library like SDWebImage or Kingfisher here)
+            DispatchQueue.global().async {
+                if let data = try? Data(contentsOf: imageUrl) {
+                    DispatchQueue.main.async {
+                        cell.Artistimg.image = UIImage(data: data)
+                    }
+                }
+            }
+        } else {
+            cell.Artistimg.image = UIImage(named: "a1") // Fallback image
+        }
+        
 //        if let imageStr = artistas[indexPath.row].imagen, let imageUrl = URL(string: imageStr){
 //            cell.Artistimg.kf.setImage(with: imageUrl, placeholder: UIImage(named: "a1"))
 //        } else {
@@ -113,16 +127,19 @@ class ArtistTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showArtist", sender: artistas[indexPath.row])
+        let selectedArtist = artistasv2[indexPath.row] // Get the selected artist
+        performSegue(withIdentifier: "showArtist", sender: selectedArtist)
     }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
         
         switch identifier {
         case "showArtist":
-            if let fin = segue.destination as? DetailViewController{
-                //fin.artist = sender as? Artista
+            if let detailVC = segue.destination as? DetailViewController,
+               let selectedArtist = sender as? Artista {
+                detailVC.artist = selectedArtist
             }
         default:
             break
