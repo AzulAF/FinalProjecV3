@@ -12,15 +12,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var DetailNombre: UITextView!
     
-//    @IBOutlet weak var DetailImage: UIImageView!
-//    
-//    @IBOutlet weak var DetailPiso: UITextView!
-//    
-//    @IBOutlet weak var DetailMesa: UITextView!
-//    
-//    @IBOutlet weak var DetailSellos: UITextView!
-//    
-//    @IBOutlet weak var DetailPagos: UITextView!
+
     
     @IBOutlet weak var DetailImage: UIImageView!
     

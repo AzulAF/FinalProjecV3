@@ -14,21 +14,7 @@ class ArtistTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-//        ArtistasService.shared.fetchArtistas { [weak self] result in
-//            switch result {
-//            case .success(let artistasList):
-//                // Almacena la lista en tu variable
-//                self?.artistas = artistasList
-//                // Recarga la vista (si es necesario)
-//                DispatchQueue.main.async {
-//                    // Por ejemplo, si estás usando una tabla
-//                    self?.tableView.reloadData()
-//                }
-//            case .failure(let error):
-//                // Maneja el error (por ejemplo, mostrando un mensaje al usuario)
-//                print("Error al obtener artistas: \(error)")
-//            }
-//        }
+
     }
 
 
@@ -36,11 +22,7 @@ class ArtistTableViewController: UITableViewController {
         super.viewDidLoad()
         fetchArtistas()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     func fetchArtistas(){
@@ -82,12 +64,10 @@ class ArtistTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return artistasv2.count
     }
 
@@ -103,7 +83,6 @@ class ArtistTableViewController: UITableViewController {
         cell.ArtistPiso.text = artistasv2[indexPath.row].piso
         
         if let imageUrl = URL(string: artistasv2[indexPath.row].imagen) {
-            // Load image (you can use a library like SDWebImage or Kingfisher here)
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: imageUrl) {
                     DispatchQueue.main.async {
@@ -114,14 +93,6 @@ class ArtistTableViewController: UITableViewController {
         } else {
             cell.Artistimg.image = UIImage(named: "a1") // Fallback image
         }
-        
-//        if let imageStr = artistas[indexPath.row].imagen, let imageUrl = URL(string: imageStr){
-//            cell.Artistimg.kf.setImage(with: imageUrl, placeholder: UIImage(named: "a1"))
-//        } else {
-//            cell.Artistimg.image =  UIImage(named: "a1")
-//        }
-
-        // Configure the cell...
 
         return cell
     }

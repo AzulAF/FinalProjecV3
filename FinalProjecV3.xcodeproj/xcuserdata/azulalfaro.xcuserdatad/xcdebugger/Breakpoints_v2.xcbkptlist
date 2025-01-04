@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "117668E7-21E7-4181-93FE-B2448527A693"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF7040D0-4B6E-4EFC-BCDC-4A63FA6B0FBB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalProjecV3/views/AddMarcadorViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "SaveMarcador(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BF7040D0-4B6E-4EFC-BCDC-4A63FA6B0FBB - 68e6f3bcc9b211cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FinalProjecV3.AddMarcadorViewController.SaveMarcador(Any) -&gt; ()"
+                  moduleName = "FinalProjecV3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/azulalfaro/Documents/DIPLOMADO/Proyecto/FinalProjecV3/FinalProjecV3/views/AddMarcadorViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "168">
+               </Location>
+               <Location
+                  uuid = "BF7040D0-4B6E-4EFC-BCDC-4A63FA6B0FBB - 68e6f3bcc9b211cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FinalProjecV3.AddMarcadorViewController.SaveMarcador(Any) -&gt; ()"
+                  moduleName = "FinalProjecV3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/azulalfaro/Documents/DIPLOMADO/Proyecto/FinalProjecV3/FinalProjecV3/views/AddMarcadorViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "532">
+               </Location>
+               <Location
+                  uuid = "BF7040D0-4B6E-4EFC-BCDC-4A63FA6B0FBB - 68e6f3bcc9b211ad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FinalProjecV3.AddMarcadorViewController.SaveMarcador(Any) -&gt; ()"
+                  moduleName = "FinalProjecV3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/azulalfaro/Documents/DIPLOMADO/Proyecto/FinalProjecV3/FinalProjecV3/views/AddMarcadorViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "188">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

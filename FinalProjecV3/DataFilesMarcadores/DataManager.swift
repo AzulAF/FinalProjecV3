@@ -25,40 +25,7 @@ class DataManager: NSObject {
         return lista
     }
     
-    func listaParaAp() -> [Artista]{
-        var lista = [Artista]()
-        print("Carga lista")
-//        do {
-//            //lista = try persistentContainer.viewContext.fetch(Marcadores.fetchRequest())
-//        } catch { print ("Error al cargar lista") }
-        return lista
-    }
-    
-    func listadodeArtistas(){
-        //var lista = [Artista]()
-        print("Carga lista")
-        let ud = UserDefaults.standard
-        if ud.integer(forKey: "BD-OK") != 1 {//la base de datos no se ha descargado
-            if InternetMonitor.shared.hayConexion{
-                print("Conectado")
-                if let laURL = URL(string: "https://private-a4ba8-dadmtarea.apiary-mock.com/event/tables"){
-                    let session = URLSession(configuration: .default)
-                    let tarea = session.dataTask(with: URLRequest(url: laURL)) { data, response, error in
-                        if error != nil {
-                            print("No se pudo descargar \(error?.localizedDescription ?? "")")
-                            return
-                        }
-//                        do{
-//                            let tmp = try JSONSerialization.jsonObject(with: data!) as! [[String: Any]]
-//                            
-//                        } catch { print("No era JSON :(")}
-                        ud.set(1, forKey: "BD-OK")
-                    }
-                    tarea.resume()
-                }
-            }
-        }
-    }
+
     
     func llenaBDMarcadores() {
         print("llenando base")
@@ -118,7 +85,7 @@ class DataManager: NSObject {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "FinalProjectV3")
+        let container = NSPersistentContainer(name: "FinalProjecV3")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.

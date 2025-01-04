@@ -236,6 +236,15 @@
                                     <action selector="SaveMarcador:" destination="sz5-YV-yDV" eventType="touchUpInside" id="xjb-wT-XPH"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITA-W5-yTo">
+                                <rect key="frame" x="52" y="618" width="288" height="112"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="112" id="4Eq-rp-Trd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Kt2-PK-dAP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -252,8 +261,11 @@
                             <constraint firstItem="Oan-gr-buH" firstAttribute="top" secondItem="15f-3S-KdG" secondAttribute="bottom" constant="56" id="CBL-2h-wmD"/>
                             <constraint firstItem="LeZ-MM-W2Q" firstAttribute="leading" secondItem="xTZ-aL-mMy" secondAttribute="trailing" constant="57" id="CeG-vM-6hp"/>
                             <constraint firstItem="KBy-Eo-Ygk" firstAttribute="top" secondItem="Kt2-PK-dAP" secondAttribute="top" constant="100" id="Dpt-nq-F8v"/>
+                            <constraint firstItem="ITA-W5-yTo" firstAttribute="centerX" secondItem="Oan-gr-buH" secondAttribute="centerX" id="FbA-zO-IMc"/>
+                            <constraint firstItem="ITA-W5-yTo" firstAttribute="top" secondItem="Oan-gr-buH" secondAttribute="bottom" constant="36" id="I2y-zF-5GR"/>
                             <constraint firstItem="ysJ-rf-3yQ" firstAttribute="trailing" secondItem="xWX-v7-3SI" secondAttribute="trailing" id="Iux-tc-FwC"/>
                             <constraint firstItem="BLD-gn-g0F" firstAttribute="top" secondItem="HkY-ga-WCW" secondAttribute="bottom" constant="30" id="J0L-y9-V16"/>
+                            <constraint firstItem="ITA-W5-yTo" firstAttribute="leading" secondItem="Kt2-PK-dAP" secondAttribute="leading" constant="52" id="Jei-JS-qoJ"/>
                             <constraint firstItem="HkY-ga-WCW" firstAttribute="top" secondItem="xTZ-aL-mMy" secondAttribute="bottom" constant="30" id="KOe-Ty-r3E"/>
                             <constraint firstItem="ysJ-rf-3yQ" firstAttribute="leading" secondItem="sJ6-gU-uhm" secondAttribute="leading" id="NyN-zC-juM"/>
                             <constraint firstItem="sJ6-gU-uhm" firstAttribute="top" secondItem="mQQ-8X-uvR" secondAttribute="bottom" constant="40" id="Oxt-7o-4nv"/>
@@ -292,11 +304,13 @@
                         <outlet property="NewNombre" destination="sJ6-gU-uhm" id="QXA-eA-ewk"/>
                         <outlet property="NewTag" destination="xWX-v7-3SI" id="EaZ-wO-cUX"/>
                         <outlet property="NewTipo" destination="15f-3S-KdG" id="nRh-f4-CsQ"/>
+                        <outlet property="SaveMarcadorButton" destination="Oan-gr-buH" id="Msd-z6-VND"/>
+                        <outlet property="warningLabel" destination="ITA-W5-yTo" id="ian-AM-DXz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gB7-78-iJ9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2589" y="458"/>
+            <point key="canvasLocation" x="-2591.6030534351144" y="457.74647887323948"/>
         </scene>
         <!--Marcadores Table View Controller-->
         <scene sceneID="FU0-Lg-Jw6">

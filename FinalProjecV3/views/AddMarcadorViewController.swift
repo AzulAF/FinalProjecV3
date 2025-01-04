@@ -6,16 +6,15 @@
 //
 
 import UIKit
+import CoreData
 
 //botones
 
 
-class AddMarcadorViewController: UIViewController {
+class AddMarcadorViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var NewNombre: UITextField!
-    
-    //@IBOutlet weak var NewArtista: UITextField!
     
     
     @IBOutlet weak var NewArtista: UITextField!
@@ -31,33 +30,36 @@ class AddMarcadorViewController: UIViewController {
     
     @IBOutlet weak var NewTipo: UITextField!
     
+    @IBOutlet weak var SaveMarcadorButton: UIButton!
     
+    @IBOutlet weak var warningLabel: UILabel!
     
     
     
     @IBAction func SaveMarcador(_ sender: Any) {
         
-        guard let name = NewNombre.text, !name.isEmpty,
-              let artista = NewArtista.text, !name.isEmpty,
-              let costo = NewCosto.text, !name.isEmpty,
-              let importancia = NewImportancia.text, !name.isEmpty,
-              let mesa = NewMesa.text, !name.isEmpty,
-              let tag = NewTag.text, !name.isEmpty,
-              let tipo = NewTipo.text, !name.isEmpty else {
+    guard SaveMarcadorButton.isEnabled else {
+            showValidationError()
             return
         }
-        //si llega a funcionar
-        
-        let successAlert = UIAlertController(
-            title: "Se añadio marcador",
-            message: "Se añadio correctamente",
-            preferredStyle: .alert
-        )
-        successAlert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(successAlert, animated: true)
-        
-        //guardamos la informacion
-        
+
+        let name = NewNombre.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let artista = NewArtista.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let costo = NewCosto.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let importancia = NewImportancia.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let mesaText = NewMesa.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let tag = NewTag.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let tipo = NewTipo.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+
+
+        let mesa: String
+        if let mesaValue = Int(mesaText), (1...100).contains(mesaValue) {
+            mesa = "\(mesaValue)"
+        } else {
+            mesa = mesaText
+        }
+
+
         let NewMarcadorFull = Marcadores(context: DataManager.shared.persistentContainer.viewContext)
         NewMarcadorFull.artist = artista
         NewMarcadorFull.name = name
@@ -66,26 +68,108 @@ class AddMarcadorViewController: UIViewController {
         NewMarcadorFull.tableNumber = mesa
         NewMarcadorFull.tag = tag
         NewMarcadorFull.type = tipo
+
+
         DataManager.shared.saveContext()
+
+
+        [NewNombre, NewArtista, NewCosto, NewImportancia, NewMesa, NewTag, NewTipo].forEach { $0?.text = "" }
+        validateInputs()
+
+
+        let successAlert = UIAlertController(
+            title: "Se añadió marcador",
+            message: "Marcador guardado exitosamente.",
+            preferredStyle: .alert
+        )
+        successAlert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(successAlert, animated: true)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+            validateInputs()
+        }
+    
+    func showValidationError() {
+        var errorMessage = "Favor de llenar el siguiente campo:\n"
         
-        let textFields = [NewNombre, NewArtista, NewCosto, NewImportancia, NewMesa, NewTag, NewTipo]
-        textFields.forEach { $0?.text = "" }
+        if NewNombre.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Nombre\n"
+        }
+        if NewArtista.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Artista\n"
+        }
+        if NewCosto.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Costo\n"
+        }
+        if NewImportancia.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Importancia\n"
+        }
+        if let mesaText = NewMesa.text?.trimmingCharacters(in: .whitespacesAndNewlines), let mesa = Int(mesaText), !(1...100).contains(mesa) {
+            errorMessage += "- Mesa (debe ser entre 1 - 00 si es un número)\n"
+        } else if NewMesa.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Mesa\n"
+        }
+        if NewTag.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Tag\n"
+        }
+        if NewTipo.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+            errorMessage += "- Tipo\n"
+        }
+        
+        let alert = UIAlertController(title: "Información faltante", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    func validateInputs() {
+        let nameValid = !(NewNombre.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let artistaValid = !(NewArtista.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let costoValid = !(NewCosto.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let importanciaValid = !(NewImportancia.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let mesaText = NewMesa.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let mesaValid = (mesaText != nil && (Int(mesaText!) == nil || (Int(mesaText!) != nil && (1...100).contains(Int(mesaText!)!))))
+        let tagValid = !(NewTag.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        let tipoValid = !(NewTipo.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+
+        SaveMarcadorButton.isEnabled = nameValid && artistaValid && costoValid && importanciaValid && mesaValid && tagValid && tipoValid
+    }
+
 
         
-        
-        
+    
+    @objc func mesaTextChanged(_ textField: UITextField) {
+        if let text = textField.text, let number = Int(text), (1...100).contains(number) {
+            warningLabel.isHidden = true
+            validateInputs()
+        } else if let text = textField.text, Int(text) == nil {
+            warningLabel.isHidden = true
+            validateInputs()
+        } else {
+            warningLabel.isHidden = false
+        }
     }
-        
-    
-    
     
     
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+           super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+        
+            warningLabel.isHidden = true
+            warningLabel.textColor = .red
+            warningLabel.text = "Porfavor ingrese un numero de 1 - 100."
+
+           [NewNombre, NewArtista, NewCosto, NewImportancia, NewMesa, NewTag, NewTipo].forEach { textField in
+               textField?.delegate = self
+               textField?.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+           }
+           
+
+           SaveMarcadorButton.isEnabled = false
+        NewMesa.addTarget(self, action: #selector(mesaTextChanged(_:)), for: .editingChanged)
+            validateInputs()
+       }
     
 
     /*

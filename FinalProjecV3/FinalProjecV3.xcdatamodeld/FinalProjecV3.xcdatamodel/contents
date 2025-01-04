@@ -4,6 +4,7 @@
         <attribute name="artist" optional="YES" attributeType="String"/>
         <attribute name="cost" optional="YES" attributeType="String"/>
         <attribute name="importance" optional="YES" attributeType="String"/>
+        <attribute name="mdescription" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="tableNumber" optional="YES" attributeType="String"/>
         <attribute name="tag" optional="YES" attributeType="String"/>

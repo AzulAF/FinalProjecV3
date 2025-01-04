@@ -19,6 +19,7 @@ public class Marcadores: NSManagedObject {
         self.tag = (dict["tag"]as? String) ?? ""
         self.type = (dict["type"]as? String) ?? ""
         self.importance = (dict["importance"]as? String) ?? ""
+        self.mdescription = (dict["mdescripction"]as? String) ?? ""
         
     }
 
