@@ -7,82 +7,158 @@
 
 import UIKit
 
-class ArtistTableViewController: UITableViewController {
-    var artistas = [Artista]()
+class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
     var artistasv2: [Artista] = []
+    var filteredArtistas: [Artista] = [] // Para los resultados filtrados
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-
-    }
-
-
+    let searchSegmentControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["Piso", "Mesa", "Nombre"])
+        control.selectedSegmentIndex = 0
+        return control
+    }()
+    
+    let searchTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Ingrese el valor de búsqueda"
+        textField.borderStyle = .roundedRect
+        return textField
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchArtistas()
-
-
+        setupSearchUI()
+        searchTextField.delegate = self
     }
     
-    func fetchArtistas(){
-        //Método para realizar la solicitud HTTP y decodificar el JSON
-            
-        let urlString = "https://private-412939-proyectoprueba1.apiary-mock.com/artistas"
+    func setupSearchUI() {
+        let stackView = UIStackView(arrangedSubviews: [searchSegmentControl, searchTextField])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
+        tableView.tableHeaderView = stackView
+        stackView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        searchSegmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+    }
+    
+    @objc func segmentChanged() {
+        searchTextField.text = ""
+        switch searchSegmentControl.selectedSegmentIndex {
+        case 0: // Piso
+            searchTextField.keyboardType = .numberPad
+            searchTextField.placeholder = "Ingrese 1 o 2"
+        case 1: // Mesa
+            searchTextField.keyboardType = .numberPad
+            searchTextField.placeholder = "Ingrese un número del 1 al 100"
+        case 2: // Nombre
+            searchTextField.keyboardType = .default
+            searchTextField.placeholder = "Ingrese un nombre (máx. 30 caracteres)"
+        default:
+            break
+        }
+    }
+    
+    func fetchArtistas() {
+        // Método para realizar la solicitud HTTP y decodificar el JSON
+        let urlString = "https://private-412939-proyectoprueba1.apiary-mock.com/artistas"
         guard let url = URL(string: urlString) else { return }
         
-        // Realizamos la solicitud HTTP
         URLSession.shared.dataTask(with: url) { data, response, error in
-            // Verificamos si hubo un error
             if let error = error {
                 print("Error al obtener los datos: \(error)")
                 return
             }
             
-            // Verificamos que los datos no sean nulos
             guard let data = data else { return }
             
-            // Intentamos decodificar los datos JSON en la estructura ArtistaResponse
             do {
                 let decoder = JSONDecoder()
                 let artistaResponse = try decoder.decode(ArtistaResponse.self, from: data)
-                
-                // Asignamos los artistas al array de artistas
                 DispatchQueue.main.async {
                     self.artistasv2 = artistaResponse.artistasresp
-                    self.tableView.reloadData()  // Recargamos la tabla
+                    self.filteredArtistas = self.artistasv2
+                    self.tableView.reloadData()
                 }
-                
             } catch {
                 print("Error al decodificar el JSON: \(error)")
             }
-        }.resume()  // Inicia la solicitud
+        }.resume()
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = (textField.text ?? "") as NSString
+        let newText = currentText.replacingCharacters(in: range, with: string)
+        
+        // Si el campo de texto está vacío, mostrar todos los artistas
+        if newText.isEmpty {
+            filteredArtistas = artistasv2
+            tableView.reloadData()
+            return true
+        }
+        
+        switch searchSegmentControl.selectedSegmentIndex {
+        case 0: // Piso
+            if let value = Int(newText), value == 1 || value == 2 {
+                filterArtistas(by: "piso", value: "\(value)")
+                return true
+            }
+            return false
+        case 1: // Mesa
+            if let value = Int(newText), (1...100).contains(value) {
+                filterArtistas(by: "mesa", value: "\(value)")
+                return true
+            }
+            return false
+        case 2: // Nombre
+            if newText.count <= 30 {
+                filterArtistas(by: "nombre", value: newText)
+                return true
+            }
+            return false
+        default:
+            return true
+        }
+    }
 
-    // MARK: - Table view data source
-
+    
+    func filterArtistas(by field: String, value: String) {
+        filteredArtistas = artistasv2.filter { artista in
+            switch field {
+            case "piso":
+                return artista.piso == value
+            case "mesa":
+                return artista.mesa == value
+            case "nombre":
+                return artista.nombre.lowercased().contains(value.lowercased())
+            default:
+                return false
+            }
+        }
+        tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artistasv2.count
+        return filteredArtistas.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath) as?
-                ArtistaTableViewCell else{
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath) as? ArtistaTableViewCell else {
             return UITableViewCell()
         }
-        cell.ArtistName.text = artistasv2[indexPath.row].nombre
-        //cell.Artistimg.text = artistas[indexPath.row].imagen
-        cell.ArtistMesa.text = artistasv2[indexPath.row].mesa
-        cell.ArtistPiso.text = artistasv2[indexPath.row].piso
         
-        if let imageUrl = URL(string: artistasv2[indexPath.row].imagen) {
+        let artista = filteredArtistas[indexPath.row]
+        cell.ArtistName.text = artista.nombre
+        cell.ArtistMesa.text = artista.mesa
+        cell.ArtistPiso.text = artista.piso
+        
+        if let imageUrl = URL(string: artista.imagen) {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: imageUrl) {
                     DispatchQueue.main.async {
@@ -91,16 +167,17 @@ class ArtistTableViewController: UITableViewController {
                 }
             }
         } else {
-            cell.Artistimg.image = UIImage(named: "a1") // Fallback image
+            cell.Artistimg.image = UIImage(named: "a1")
         }
-
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedArtist = artistasv2[indexPath.row] // Get the selected artist
+        let selectedArtist = filteredArtistas[indexPath.row] // Obtener el artista filtrado
         performSegue(withIdentifier: "showArtist", sender: selectedArtist)
     }
+
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,18 +193,5 @@ class ArtistTableViewController: UITableViewController {
             break
         }
     }
-
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

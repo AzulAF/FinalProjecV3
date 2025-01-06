@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7152B3D32D1919D400ACABD9 /* ArtistasService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7152B3D22D1919D400ACABD9 /* ArtistasService.swift */; };
+		7177ACFB2D2B8E7A007B99F5 /* ImagesShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177ACFA2D2B8E7A007B99F5 /* ImagesShow.swift */; };
+		7177ACFD2D2B9098007B99F5 /* HorizontalImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177ACFC2D2B9098007B99F5 /* HorizontalImagesViewController.swift */; };
+		7177ACFF2D2B91CE007B99F5 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177ACFE2D2B91CE007B99F5 /* ImageCell.swift */; };
 		717D4A682D17BF180000F1C9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D4A672D17BF180000F1C9 /* MainViewController.swift */; };
 		717D4A6B2D1869A90000F1C9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 717D4A6A2D1869A90000F1C9 /* CoreData.framework */; };
 		71B79F1B2D16762200896451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B79F1A2D16762200896451 /* AppDelegate.swift */; };
@@ -33,6 +36,9 @@
 
 /* Begin PBXFileReference section */
 		7152B3D22D1919D400ACABD9 /* ArtistasService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistasService.swift; sourceTree = "<group>"; };
+		7177ACFA2D2B8E7A007B99F5 /* ImagesShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesShow.swift; sourceTree = "<group>"; };
+		7177ACFC2D2B9098007B99F5 /* HorizontalImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalImagesViewController.swift; sourceTree = "<group>"; };
+		7177ACFE2D2B91CE007B99F5 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		717D4A672D17BF180000F1C9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		717D4A6A2D1869A90000F1C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		71B79F172D16762200896451 /* FinalProjecV3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProjecV3.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +114,7 @@
 				71B79F2B2D16762300896451 /* Info.plist */,
 				71B79F232D16762200896451 /* FinalProjecV3.xcdatamodeld */,
 				71B79F312D1679D700896451 /* Persistence.swift */,
+				7177ACFA2D2B8E7A007B99F5 /* ImagesShow.swift */,
 				71B79F3B2D167E1D00896451 /* Artista.swift */,
 				71B79F1E2D16762200896451 /* ViewController.swift */,
 			);
@@ -136,6 +143,8 @@
 				71B79F572D169F5400896451 /* DetailViewController.swift */,
 				717D4A672D17BF180000F1C9 /* MainViewController.swift */,
 				7152B3D22D1919D400ACABD9 /* ArtistasService.swift */,
+				7177ACFC2D2B9098007B99F5 /* HorizontalImagesViewController.swift */,
+				7177ACFE2D2B91CE007B99F5 /* ImageCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -216,11 +225,14 @@
 				71B79F542D169F1B00896451 /* ArtistaTableViewCell.swift in Sources */,
 				71B79F4A2D168DB300896451 /* DataManager.swift in Sources */,
 				71B79F482D168D3600896451 /* InternerMonitor.swift in Sources */,
+				7177ACFF2D2B91CE007B99F5 /* ImageCell.swift in Sources */,
 				71B79F1F2D16762200896451 /* ViewController.swift in Sources */,
 				71B79F5A2D169FE000896451 /* MarcadoresTableViewController.swift in Sources */,
 				717D4A682D17BF180000F1C9 /* MainViewController.swift in Sources */,
 				71B79F4E2D168F5B00896451 /* AddMarcadorViewController.swift in Sources */,
 				71B79F1B2D16762200896451 /* AppDelegate.swift in Sources */,
+				7177ACFD2D2B9098007B99F5 /* HorizontalImagesViewController.swift in Sources */,
+				7177ACFB2D2B8E7A007B99F5 /* ImagesShow.swift in Sources */,
 				71B79F1D2D16762200896451 /* SceneDelegate.swift in Sources */,
 				71B79F462D168AD500896451 /* Marcadores+CoreDataProperties.swift in Sources */,
 				7152B3D32D1919D400ACABD9 /* ArtistasService.swift in Sources */,
