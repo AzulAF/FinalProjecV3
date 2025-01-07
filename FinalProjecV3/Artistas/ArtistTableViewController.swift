@@ -12,7 +12,7 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
     var filteredArtistas: [Artista] = [] // Para los resultados filtrados
     
     let searchSegmentControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Piso", "Mesa", "Nombre"])
+        let control = UISegmentedControl(items: ["Piso", "Mesa", "Nombre", "Sellos"])
         control.selectedSegmentIndex = 0
         return control
     }()
@@ -56,6 +56,9 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
         case 2: // Nombre
             searchTextField.keyboardType = .default
             searchTextField.placeholder = "Ingrese un nombre (máx. 30 caracteres)"
+        case 3: // Sellos
+            searchTextField.keyboardType = .default
+            searchTextField.placeholder = "Ingrese 'SI' o 'NO'"
         default:
             break
         }
@@ -118,12 +121,18 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
                 return true
             }
             return false
+        case 3: // Sellos
+            // Permitir cualquier texto pero filtrar solo cuando sea "si" o "no"
+            if newText.lowercased() == "si" || newText.lowercased() == "no" {
+                filterArtistas(by: "sellos", value: newText.lowercased())
+            }
+            return true // Permitir que se modifique el texto
         default:
             return true
         }
     }
 
-    
+    // AÑADIR FILTRO DE SELLOS
     func filterArtistas(by field: String, value: String) {
         filteredArtistas = artistasv2.filter { artista in
             switch field {
@@ -133,6 +142,8 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
                 return artista.mesa == value
             case "nombre":
                 return artista.nombre.lowercased().contains(value.lowercased())
+            case "sellos":
+                return artista.sellos.lowercased() == value
             default:
                 return false
             }
@@ -178,8 +189,6 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "showArtist", sender: selectedArtist)
     }
 
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else { return }
         
@@ -193,5 +202,4 @@ class ArtistTableViewController: UITableViewController, UITextFieldDelegate {
             break
         }
     }
-
 }

@@ -45,9 +45,15 @@ class DetailViewController: UIViewController {
            }
            // Configure the view with the artist's data
            if let artist = artist {
+               var placeholdertext = "Lorem Ipsum"
                DetailNombre.text = artist.nombre
                DetailPiso.text = artist.piso
                DetailMesa.text = artist.mesa
+               if artist.tags == "" {
+                   DetailDescripcion.text = placeholdertext
+               } else{
+                   DetailDescripcion.text = "" + artist.tags
+               }
                DetailSellos.text = artist.sellos
                DetailPagos.text = """
                    Efectivo: \(pagoefectivoproof)
