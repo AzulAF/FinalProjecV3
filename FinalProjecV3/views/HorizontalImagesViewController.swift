@@ -7,18 +7,12 @@
 import UIKit
 
 class HorizontalImagesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    // Variable para recibir las imágenes desde el controlador anterior
     var images: [ImagesShow] = []
-    
-    // Crear una colección de vista
     private var collectionView: UICollectionView!
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems
         guard let currentIndexPath = visibleIndexPaths.first else { return }
-        
-        if currentIndexPath.row == images.count - 1 { // Última imagen
+        if currentIndexPath.row == images.count - 1 {
             collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: false)
         }
     }
@@ -26,31 +20,19 @@ class HorizontalImagesViewController: UIViewController, UICollectionViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Configurar el color de fondo semitransparente (rosa con transparencia)
-        view.backgroundColor = UIColor(red: 1.0, green: 0.753, blue: 1.0, alpha: 0.7)
-        
-        // Configurar el diseño de la colección
+        view.backgroundColor = UIColor(red: 0.2078, green: 0.1843, blue: 0.1843, alpha: 0.7)
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal // Desplazamiento horizontal
-        layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height) // Tamaño de cada celda
-        layout.minimumLineSpacing = 0 // Sin espacio entre celdas
-        
-        // Inicializar la colección
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
+        layout.minimumLineSpacing = 0
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isPagingEnabled = true // Permitir desplazamiento tipo "paginación"
+        collectionView.isPagingEnabled = true
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Establecer fondo transparente para el collectionView
         collectionView.backgroundColor = .clear
-        
-        // Agregar la colección a la vista
         view.addSubview(collectionView)
-        
-        // Configurar las restricciones de diseño
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

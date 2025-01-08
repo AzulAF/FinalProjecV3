@@ -8,11 +8,14 @@
 import UIKit
 import CoreData
 
-//botones
 
+class AddMarcadorViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource  {
+    var marcador: Marcadores? {
+        didSet {
+            
+        }
+    }
 
-class AddMarcadorViewController: UIViewController, UITextFieldDelegate {
-    
     
     @IBOutlet weak var NewNombre: UITextField!
     
@@ -50,8 +53,6 @@ class AddMarcadorViewController: UIViewController, UITextFieldDelegate {
         let mesaText = NewMesa.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let tag = NewTag.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let tipo = NewTipo.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-
-
         let mesa: String
         if let mesaValue = Int(mesaText), (1...100).contains(mesaValue) {
             mesa = "\(mesaValue)"
@@ -59,24 +60,26 @@ class AddMarcadorViewController: UIViewController, UITextFieldDelegate {
             mesa = mesaText
         }
 
-
-        let NewMarcadorFull = Marcadores(context: DataManager.shared.persistentContainer.viewContext)
-        NewMarcadorFull.artist = artista
-        NewMarcadorFull.name = name
-        NewMarcadorFull.cost = costo
-        NewMarcadorFull.importance = importancia
-        NewMarcadorFull.tableNumber = mesa
-        NewMarcadorFull.tag = tag
-        NewMarcadorFull.type = tipo
-
-
+        if let marcador = marcador {
+            marcador.name = name
+            marcador.artist = artista
+            marcador.cost = costo
+            marcador.importance = importancia
+            marcador.tableNumber = mesa
+            marcador.tag = tag
+            marcador.type = tipo
+        } else {
+            let NewMarcadorFull = Marcadores(context: DataManager.shared.persistentContainer.viewContext)
+            NewMarcadorFull.name = name
+            NewMarcadorFull.artist = artista
+            NewMarcadorFull.cost = costo
+            NewMarcadorFull.importance = importancia
+            NewMarcadorFull.tableNumber = mesa
+            NewMarcadorFull.tag = tag
+            NewMarcadorFull.type = tipo
+        }
         DataManager.shared.saveContext()
-
-
-        [NewNombre, NewArtista, NewCosto, NewImportancia, NewMesa, NewTag, NewTipo].forEach { $0?.text = "" }
-        validateInputs()
-
-
+        navigationController?.popViewController(animated: true)
         let successAlert = UIAlertController(
             title: "Se añadió marcador",
             message: "Marcador guardado exitosamente.",
@@ -149,37 +152,71 @@ class AddMarcadorViewController: UIViewController, UITextFieldDelegate {
             warningLabel.isHidden = false
         }
     }
-    
-    
+
+        let importanciaOptions = ["Mucha", "Media", "Poca"]
+        var importanciaPicker = UIPickerView()
 
     override func viewDidLoad() {
            super.viewDidLoad()
-
-        
+            view.backgroundColor = UIColor(named: "element_bg")
             warningLabel.isHidden = true
             warningLabel.textColor = .red
             warningLabel.text = "Porfavor ingrese un numero de 1 - 100."
-
            [NewNombre, NewArtista, NewCosto, NewImportancia, NewMesa, NewTag, NewTipo].forEach { textField in
                textField?.delegate = self
                textField?.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
            }
-           
-
-           SaveMarcadorButton.isEnabled = false
-        NewMesa.addTarget(self, action: #selector(mesaTextChanged(_:)), for: .editingChanged)
+            if let marcador = marcador {
+                NewNombre.text = marcador.name
+                NewArtista.text = marcador.artist
+                NewCosto.text = marcador.cost
+                NewImportancia.text = marcador.importance
+                NewMesa.text = marcador.tableNumber
+                NewTag.text = marcador.tag
+                NewTipo.text = marcador.type
+                SaveMarcadorButton.setTitle("Actualizar", for: .normal)
+            }
+            importanciaPicker.delegate = self
+            importanciaPicker.dataSource = self
+            importanciaPicker.backgroundColor = .systemGray6
+            NewImportancia.inputView = importanciaPicker
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let doneButton = UIBarButtonItem(title: "Listo", style: .done, target: self, action: #selector(donePickingImportance))
+            toolbar.setItems([doneButton], animated: true)
+            toolbar.isUserInteractionEnabled = true
+            NewImportancia.inputAccessoryView = toolbar
+            SaveMarcadorButton.isEnabled = false
+            NewMesa.addTarget(self, action: #selector(mesaTextChanged(_:)), for: .editingChanged)
             validateInputs()
+        
        }
     
+    // MARK: - UIPickerView DataSource & Delegate
 
-    /*
-    // MARK: - Navigation
+        func numberOfComponents(in pickerView: UIPickerView) -> Int {
+            return 1
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+            return importanciaOptions.count
+        }
 
+        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+            return importanciaOptions[row]
+        }
+
+        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+            NewImportancia.text = importanciaOptions[row]
+            validateInputs()
+        }
+
+        // MARK: - Finalizar selección
+        @objc func donePickingImportance() {
+            if NewImportancia.text?.isEmpty ?? true {
+                NewImportancia.text = importanciaOptions.first
+            }
+            NewImportancia.resignFirstResponder()
+        }
+    
 }

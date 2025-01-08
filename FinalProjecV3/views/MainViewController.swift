@@ -39,62 +39,44 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var HorariosTouch: UIImageView!
     
-    
-    
-    // Variable para almacenar las imágenes seleccionadas
+
     var imagesToShow: [ImagesShow] = []
     var imagesToShow2: [ImagesShow] = []
     var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Configurar el borde curveado para el UILabel 'titulo'
-        titulo.layer.cornerRadius = 10  // Radio de curvatura de las esquinas
-        titulo.layer.masksToBounds = true  // Asegúrate de que el contenido se recorte dentro de las esquinas redondeadas
-        titulo.layer.borderWidth = 2  // Establece el grosor del borde
-        titulo.layer.borderColor = UIColor.black.cgColor  // Color del borde (puedes cambiarlo)
+        titulo.layer.cornerRadius = 10
+        titulo.layer.masksToBounds = true
+        titulo.layer.borderWidth = 2
+        titulo.layer.borderColor = UIColor.black.cgColor
         titulo.backgroundColor = UIColor.white
-        view.backgroundColor = UIColor(red: 1.0, green: 0.453, blue: 1.0, alpha: 1.0)
-        
-        // Agregar gestos a las imágenes
+        //Gestos
         addTapGesture(to: MapaTouch, action: #selector(mapTapped))
         addTapGesture(to: InvitadosTouch, action: #selector(invitedTapped))
         addTapGesture(to: NoticiasTouch, action: #selector(newsTapped))
         addTapGesture(to: AvisosTouch, action: #selector(warningsTapped))
         addTapGesture(to: TalleresTouch, action: #selector(workshopsTapped))
         addTapGesture(to: HorariosTouch, action: #selector(scheduleTapped))
-        // Configurar el UICollectionView dentro del placeholder
         setupCollectionView()
-        
-        // Cargar imágenes para collectionViewPlaceholder desde la función mainmenu
         mainmenu()
         print("cargan imagenes de menu")
 
     }
     
     func setupCollectionView() {
-        // Crear el diseño para el UICollectionView
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: view.bounds.width, height: 200) // Ajusta la altura según sea necesario
+        layout.itemSize = CGSize(width: view.bounds.width, height: 200)
         layout.minimumLineSpacing = 0
-
-        // Crear el UICollectionView
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(red: 1.0, green: 0.753, blue: 1.0, alpha: 0.3)
-
-        // Registrar la celda personalizada
+        collectionView.backgroundColor = UIColor(red: 1.0, green: 0.753, blue: 1.0, alpha: 0.0)
         collectionView.register(ImageCellOne.self, forCellWithReuseIdentifier: "ImageCellOne")
-
-
-        // Agregar el UICollectionView a la vista principal
         view.addSubview(collectionView)
-
-        // Configurar las restricciones del UICollectionView
         NSLayoutConstraint.activate([
             collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
@@ -206,7 +188,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showOption" {
             if let destinationVC = segue.destination as? HorizontalImagesViewController {
-                destinationVC.images = imagesToShow // Enviar las imágenes al siguiente ViewController
+                destinationVC.images = imagesToShow 
             }
         }
     }

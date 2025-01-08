@@ -13,7 +13,7 @@ class ImageCellOne: UICollectionViewCell {
         super.init(frame: frame)
         
         imageView = UIImageView(frame: contentView.bounds)
-        imageView.contentMode = .scaleAspectFit // Ajustar para que la imagen se muestre completa
+        imageView.contentMode = .scaleAspectFit 
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         
@@ -31,12 +31,8 @@ class ImageCellOne: UICollectionViewCell {
     }
 
     func configure(with imageShow: ImagesShow) {
-        // Configurar un placeholder inicial
         imageView.image = UIImage(named: "a1")
-        
-        // Descarga manual de la imagen
         guard let url = URL(string: imageShow.imagen) else { return }
-        
         let session = URLSession.shared
         session.dataTask(with: url) { [weak self] data, response, error in
             if let error = error {

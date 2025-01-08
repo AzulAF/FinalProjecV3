@@ -42,7 +42,7 @@ class ImageCell: UICollectionViewCell {
                 }
             }
         } else {
-            imageView.image = UIImage(named: "a1") // Imagen por defecto
+            imageView.image = UIImage(named: "a1")
         }
     }
 }
