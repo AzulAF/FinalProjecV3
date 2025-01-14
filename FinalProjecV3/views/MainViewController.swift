@@ -12,6 +12,10 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var titulo: UILabel!
     
     //@IBOutlet weak var collectionViewPlaceholder: UICollectionView!
+    @IBOutlet weak var buttonmarcadores: UIButton!
+    
+    
+    @IBOutlet weak var buttonlista: UIButton!
     
     
     @IBAction func lista(_ sender: Any) {
@@ -46,10 +50,20 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titulo.layer.cornerRadius = 10
-        titulo.layer.masksToBounds = true
-        titulo.layer.borderWidth = 2
-        titulo.layer.borderColor = UIColor.black.cgColor
+        // Observa cambios en la conectividad
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleConexionCambio),
+                                               name: .conexionCambio,
+                                               object: nil)
+        
+        // Comprueba el estado inicial de la conexión
+        verificarConexion()
+        buttonlista.tintColor = UIColor(named: "colorEnabled") // Replace with your desired color
+        buttonmarcadores.tintColor = UIColor(named: "colorEnabled")
+        titulo?.layer.cornerRadius = 10
+        titulo?.layer.masksToBounds = true
+        titulo?.layer.borderWidth = 2
+        titulo?.layer.borderColor = UIColor.black.cgColor
         titulo.backgroundColor = UIColor.white
         //Gestos
         addTapGesture(to: MapaTouch, action: #selector(mapTapped))
@@ -74,6 +88,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        //cambiar color de fondo?
         collectionView.backgroundColor = UIColor(red: 1.0, green: 0.753, blue: 1.0, alpha: 0.0)
         collectionView.register(ImageCellOne.self, forCellWithReuseIdentifier: "ImageCellOne")
         view.addSubview(collectionView)
@@ -194,4 +209,32 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
 
+    //Para internet
+    
+    deinit {
+            NotificationCenter.default.removeObserver(self, name: .conexionCambio, object: nil)
+        }
+        
+        @objc private func handleConexionCambio() {
+            verificarConexion()
+        }
+        
+        private func verificarConexion() {
+            if !InternetMonitor.shared.hayConexion {
+                mostrarAlerta(titulo: "Sin conexión a Internet",
+                              mensaje: "No tienes conexión a Internet. Por favor, verifica tu red.")
+            } else if !InternetMonitor.shared.tipoConexionWiFi {
+                mostrarAlerta(titulo: "Usando datos móviles",
+                              mensaje: "Estás usando datos móviles. Esto podría consumir tu plan.")
+            }
+        }
+        
+        private func mostrarAlerta(titulo: String, mensaje: String) {
+            let alerta = UIAlertController(title: titulo,
+                                            message: mensaje,
+                                            preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Entendido", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        }
+    
 }

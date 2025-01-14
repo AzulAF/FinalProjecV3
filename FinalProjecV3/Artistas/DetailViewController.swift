@@ -29,6 +29,14 @@ class DetailViewController: UIViewController {
     // Configura las vistas utilizando los datos del artista y establece valores predeterminados en caso de datos faltantes.
    override func viewDidLoad() {
        super.viewDidLoad()
+       // Observa cambios en la conectividad
+       NotificationCenter.default.addObserver(self,
+                                              selector: #selector(handleConexionCambio),
+                                              name: .conexionCambio,
+                                              object: nil)
+       
+       // Comprueba el estado inicial de la conexión
+       verificarConexion()
        // Variables para representar la disponibilidad de los métodos de pago.
        var pagoefectivoproof = "Disponible"
        var pagootroproof = "Disponible"
@@ -41,7 +49,7 @@ class DetailViewController: UIViewController {
        }
        // Configura las vistas con los datos del artista si están disponibles.
        if let artist = artist {
-           var placeholdertext = "Lorem Ipsum"
+           let placeholdertext = "Lorem Ipsum"
            // Asigna los valores del artista a las vistas correspondientes.
            DetailNombre.text = artist.nombre
            DetailPiso.text = artist.piso
@@ -73,4 +81,32 @@ class DetailViewController: UIViewController {
            }
        }
    }
+    
+    //Para internet
+    
+    deinit {
+            NotificationCenter.default.removeObserver(self, name: .conexionCambio, object: nil)
+        }
+        
+        @objc private func handleConexionCambio() {
+            verificarConexion()
+        }
+        
+        private func verificarConexion() {
+            if !InternetMonitor.shared.hayConexion {
+                mostrarAlerta(titulo: "Sin conexión a Internet",
+                              mensaje: "No tienes conexión a Internet. Por favor, verifica tu red.")
+            } else if !InternetMonitor.shared.tipoConexionWiFi {
+                mostrarAlerta(titulo: "Usando datos móviles",
+                              mensaje: "Estás usando datos móviles. Esto podría consumir tu plan.")
+            }
+        }
+        
+        private func mostrarAlerta(titulo: String, mensaje: String) {
+            let alerta = UIAlertController(title: titulo,
+                                            message: mensaje,
+                                            preferredStyle: .alert)
+            alerta.addAction(UIAlertAction(title: "Entendido", style: .default, handler: nil))
+            present(alerta, animated: true, completion: nil)
+        }
 }

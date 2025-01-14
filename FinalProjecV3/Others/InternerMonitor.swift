@@ -12,7 +12,13 @@ import Network
 class InternetMonitor:NSObject {
     static let shared = InternetMonitor()
     
-    var hayConexion = true
+    var hayConexion = true {
+        didSet {
+            if oldValue != hayConexion {
+                NotificationCenter.default.post(name: .conexionCambio, object: nil)
+            }
+        }
+    }
     var tipoConexionWiFi = false
     private var monitor = NWPathMonitor()
     
@@ -25,4 +31,7 @@ class InternetMonitor:NSObject {
         }
         monitor.start(queue:DispatchQueue.global(qos: .background))
     }
+}
+extension Notification.Name {
+    static let conexionCambio = Notification.Name("conexionCambio")
 }
