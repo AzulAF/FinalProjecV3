@@ -25,17 +25,17 @@ No se requieren credenciales para acceder a la aplicación. El acceso es libre y
 
 # Imagenes de la aplicación en uso
 Launchscreen // Splashscreen
-<p align="center"><img src="https://github.com/user-attachments/assets/94fd0bb2-9fc2-418b-b24e-0504ed996bdc" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/dd69287f-637e-4f5d-9569-e08d9ac35988" alt="" width="300"/></p>
 Vista inicial
-<p align="center"><img src="https://github.com/user-attachments/assets/4afcc743-e0b4-4815-8fd8-2e1724e5b445" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/5ebcec77-b06b-4174-bd11-f2f427a594b0" alt="" width="300"/></p>
 Guardado de un marcador
-<p align="center"><img src="https://github.com/user-attachments/assets/8b2d8132-658a-4d8c-8a43-08545ba7bf97" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/c1341d75-2e88-4884-9bc0-d20fefdc8493" alt="" width="300"/></p>
 Lista de marcadores guardados
-<p align="center"><img src="https://github.com/user-attachments/assets/d3495caa-0754-4ec8-98fe-b36319c3b330" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/407b9d68-bea6-47e4-868c-e118b7ba2057" alt="" width="300"/></p>
 Vista de las opciones principales ("Noticias")
-<p align="center"><img src="https://github.com/user-attachments/assets/12e0a5f0-e60e-4991-acd3-4adfc074049b" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/306585e6-efb0-491a-9252-ebfe8cdb662a" alt="" width="300"/></p>
 Vista de lista de artistas
-<p align="center"><img src="https://github.com/user-attachments/assets/34948533-6e42-44c2-909e-805ecf172ed7" alt="" width="300"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/b6d58048-01d0-4af2-85a7-805f2bba0cc3" alt="" width="300"/></p>
 
 
 
